@@ -80,6 +80,7 @@ class CalculatorService < Sinatra::Base
 
   # Detect the SOAP operation based on the root element in the SOAP body
   def soap_operation_to_method(soap_body)
+    puts "\nREQUEST:\n" + soap_body.to_s
     method = soap_body.root.name.sub(/Request$/, '').gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').gsub(/([a-z\d])([A-Z])/,'\1_\2').downcase.to_sym
   end
 
@@ -90,7 +91,9 @@ class CalculatorService < Sinatra::Base
     year = soap_body.root.at_xpath('//calculator:year/text()', 'calculator' => 'http://www.hans.com/calculator').to_s.to_i
     gender = soap_body.root.at_xpath('//calculator:gender/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
     state = soap_body.root.at_xpath('//calculator:state/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
-    builder(:car_premium_response, :locals => {:message => getCarPremium(age, make, year, gender, state)})
+    msg=builder(:car_premium_response, :locals => {:message => getCarPremium(age, make, year, gender, state)})
+    puts "\nRESPONSE:\n" + msg.to_s + "\n"
+    msg
   end
 
   # Life Premium operation
@@ -99,7 +102,9 @@ class CalculatorService < Sinatra::Base
     occupationCategory = soap_body.root.at_xpath('//calculator:occupationCategory/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
     gender = soap_body.root.at_xpath('//calculator:gender/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
     state = soap_body.root.at_xpath('//calculator:state/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
-    builder(:life_premium_response, :locals => {:message => getLifePremium(age, occupationCategory, gender, state)})
+    msg=builder(:life_premium_response, :locals => {:message => getLifePremium(age, occupationCategory, gender, state)})
+    puts "\nRESPONSE:\n" + msg.to_s + "\n"
+    msg
   end
   
   def getLifePremium(age, occupationCategory, gender, state)
