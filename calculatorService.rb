@@ -85,7 +85,6 @@ class CalculatorService < Sinatra::Base
 
   # Car Premium operation
   def car_premium(soap_body)
-    puts "\nIN  :"+ soap_body.to_s + "\n"
     age = soap_body.root.at_xpath('//calculator:age/text()', 'calculator' => 'http://www.hans.com/calculator').to_s.to_i
     make = soap_body.root.at_xpath('//calculator:make/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
     year = soap_body.root.at_xpath('//calculator:year/text()', 'calculator' => 'http://www.hans.com/calculator').to_s.to_i
@@ -100,9 +99,7 @@ class CalculatorService < Sinatra::Base
     occupationCategory = soap_body.root.at_xpath('//calculator:occupationCategory/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
     gender = soap_body.root.at_xpath('//calculator:gender/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
     state = soap_body.root.at_xpath('//calculator:state/text()', 'calculator' => 'http://www.hans.com/calculator').to_s
-    msg = builder(:life_premium_response, :locals => {:message => getLifePremium(age, occupationCategory, gender, state)})
-    puts "\nOUT :"+ msg.to_s + "\n"
-    msg
+    builder(:life_premium_response, :locals => {:message => getLifePremium(age, occupationCategory, gender, state)})
   end
   
   def getLifePremium(age, occupationCategory, gender, state)
