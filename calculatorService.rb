@@ -72,7 +72,7 @@ class CalculatorService < Sinatra::Base
   # request port number
   get '/calculator_service/wsdl' do
     puts "\nProcessing request for wsdl\n"
-    url = ENV['BASE_URL'] || "http://localhost:#{request.port}"
+    url = ENV['BASE_URL'] || "https://taigircalculatorservicesoap.herokuapp.com"
     erb(:calculator_service_wsdl, :locals => {:url => url}, :content_type => :xml)
   end
 
