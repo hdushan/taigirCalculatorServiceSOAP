@@ -2,7 +2,7 @@ require 'bundler'
 Bundler.setup
 require 'sinatra/base'
 require 'nokogiri'
-require 'builder'
+require 'tilt/builder'
 require 'carPremiumCalculator'
 require 'lifePremiumCalculator'
 
