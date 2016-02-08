@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.hans.com/calculator" xmlns="http://www.hans.com/calculator" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:complexType name="CalculatorMessageType">
+    <xs:sequence>
+	  <xs:element name="age" type="xs:integer" minOccurs="1" />
+      <xs:element name="gender" type="xs:string" minOccurs="1" />
+	  <xs:element name="state" type="xs:string" minOccurs="1" />
+      <xs:element name="make" type="xs:string" minOccurs="0" />
+	  <xs:element name="year" type="xs:integer" minOccurs="0" />
+	  <xs:element name="occupationCategory" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CarPremiumRequest" type="CalculatorMessageType"/>
+  <xs:element name="CarPremiumResponse" type="CalculatorMessageType"/>
+  <xs:element name="LifePremiumRequest" type="CalculatorMessageType"/>
+  <xs:element name="LifePremiumResponse" type="CalculatorMessageType"/>
+</xs:schema>
