@@ -1,0 +1,14 @@
+language: ruby
+rvm: 2.2.3
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -qq postgresql-server-dev-9.3
+deploy:
+  provider: heroku
+  app: taigircalculatorservicesoap
+  on:
+    repo: hdushan/taigircalculatorservicesoap
+notifications:
+  email:
+    recipients:
+    - hansrd_98@yahoo.com
