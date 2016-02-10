@@ -4,8 +4,7 @@ require 'pact/xml'
 require './spec/service_consumers/provider_states_for_quote_front_end_app'
 
 Pact.configure do | config |
-    config.register_body_differ /xml/, Pact::XML::Differ
-    config.register_diff_formatter /xml/, Pact::XML::DiffFormatter
+    config.diff_formatter = :embedded
 end
 
 Pact.service_provider "Calculator Service" do
