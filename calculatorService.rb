@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'tilt/builder'
 require 'carPremiumCalculator'
 require 'lifePremiumCalculator'
+require 'json'
 
 class CalculatorService < Sinatra::Base
   # Exception classes that are translated into SOAP faults
@@ -25,18 +26,45 @@ class CalculatorService < Sinatra::Base
   set :root, File.dirname(__FILE__)
 
   configure do
-    # SOAP requires SOAP messages to have Content-Type text/xml (the
-    # Sinatra default is application/xml)
     mime_type :xml, "text/xml"
   end
 
   def initialize(*args)
-    puts "\nReading xsd\n"
     @xsd = Nokogiri::XML::Schema(File.read("#{File.dirname(__FILE__)}/public/calculator_service.xsd"))
-    puts "\nReading xslt\n"
     @xslt = Nokogiri::XSLT(File.read("#{File.dirname(__FILE__)}/lib/soap_body.xslt"))
     super
   end
+  
+	get '/' do
+		'Calculator Service'
+	end
+
+	get '/car_premium' do
+		age = params[:age].to_f
+		gender = params[:gender]
+		state = params[:state]
+		make = params[:make]
+    year = params[:year].to_i
+
+		headers 'Content-Type' => 'application/json'
+		
+		{
+			price: getCarPremium(age, make, year, gender, state).to_f
+		}.to_json
+	end
+  
+	get '/life_premium' do
+		age = params[:age].to_f
+		gender = params[:gender]
+		state = params[:state]
+		occupationCategory = params[:occupationCategory]
+
+		headers 'Content-Type' => 'application/json'
+		
+		{
+			price: getLifePremium(age, occupationCategory, gender, state).to_f
+		}.to_json
+	end
 
   # SOAP endpoint
   post '/calculator_service' do
@@ -71,7 +99,6 @@ class CalculatorService < Sinatra::Base
   # that to form the endpoint URL, otherwise default to localhost with
   # request port number
   get '/calculator_service/wsdl' do
-    puts "\nProcessing request for wsdl\n"
     url = ENV['BASE_URL'] || "https://taigircalculatorservicesoap.herokuapp.com"
     erb(:calculator_service_wsdl, :locals => {:url => url}, :content_type => :xml)
   end
