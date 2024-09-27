@@ -5,7 +5,7 @@ gem "nokogiri"
 gem "builder"
 gem "rake"
 gem "rspec"
-gem "pact"
+gem "pact", ">= 1.65.2"
 gem "pact-xml"
 
 group :development, :test do
