@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem "sinatra"
-gem "nokogiri"
+gem "nokogiri", ">= 1.15.7"
 gem "builder"
 gem "rake"
 gem "rspec"
