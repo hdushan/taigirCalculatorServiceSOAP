@@ -1,11 +1,11 @@
 source "http://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", ">= 4.0.0"
 gem "nokogiri"
 gem "builder"
 gem "rake"
 gem "rspec"
-gem "pact"
+gem "pact", ">= 1.44.0"
 gem "pact-xml"
 
 group :development, :test do
